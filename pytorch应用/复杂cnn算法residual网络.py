@@ -9,12 +9,19 @@ import matplotlib.pyplot as plt
 """构建数据集的转换器，transforms.ToTensor()是将拿到的数据集转化为张量，数据集里的图片是28*28的像素，经过转换，会变成1*28*28的张量（1是通道数量），
 transforms.Normalize((0.1307,), (0.3081))是把数据集变成均值为0.1307，标准差为0.3081的正态分布"""
 transform = transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307,), (0.3081))])
+# transform = transforms.Compose([transforms.ToTensor()])
 """下载数据集"""
-train_dataset = datasets.MNIST(root="C:\\python\\python3.9-Mindspore-深度学习\\课件和数据集\\minist\\",
+train_dataset = datasets.MNIST(root="C:\\python\\python3.9-Mindspore-深度学习\\课件和数据集\\minist",
 train=True,transform=transform,download=False)#train为True下载训练集，反之下载数据集，download确定是否下载，transform设置数据集的转换器
-test_dataset = datasets.MNIST(root="C:\\python\\python3.9-Mindspore-深度学习\\课件和数据集\\minist\\",
+test_dataset = datasets.MNIST(root="C:\\python\\python3.9-Mindspore-深度学习\\课件和数据集\\minist",
 transform=transform,train = False,download=False)
 """对数据集做mini-batch处理"""
+# train_data,train_label = train_dataset[0]
+# train_data = train_data.resize(28,28)
+# print(train_label)
+# plt.imshow(train_data)
+# plt.show()
+
 train_loader = DataLoader(dataset = train_dataset,batch_size=64,shuffle=True)
 test_loader = DataLoader(dataset = test_dataset,batch_size=64,shuffle=False)
 

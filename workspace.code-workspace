@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "Mindspore",
+			"path": "Mindspore"
+		},
+		{
+			"name": "torch-points3d",
+			"path": "Mindspore\\torch-points3d"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "C:\\python3.9\\python.exe"
+	}
+}
