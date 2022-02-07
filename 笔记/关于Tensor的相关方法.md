@@ -1,6 +1,6 @@
 # 关于Tensor的相关方法
 
-1. ## 判断tensor的类型：
+###1.  判断tensor的类型：
 
    1. type：
 
@@ -10,7 +10,7 @@
 
       isinstance可以用来判断张量的数据类型，使用方法为isinstance(data,type)它会返回布尔类型的值
 
-2. ##  判断tensor的形状大小：
+###2.   判断tensor的形状大小：
 
    1. shape：
 
@@ -28,7 +28,7 @@
 
       使用方法：a.numel()，直接返回一个张量所占内存的大小，就是所有维度相乘
 
-3. ## 初始化tensor的一些方法：
+###3.  初始化tensor的一些方法：
 
    1. rand:
 
@@ -61,8 +61,8 @@
    8. randperm
    
       使用方法：torch.randperm(n)，生成从0到n-1随机种子，可以用于张量在dim=0的维度上的交换。
-   
-4. ## 对Tensor进行提取操作的方法
+
+###4.  对Tensor进行提取操作的方法
 
    1. index_select
 
@@ -80,7 +80,7 @@
 
       使用方法，a[...]，意思就是a，或者a[0,...]意思就是a[0]，...就是取后面所有的。
 
-5. ## 对Tensor的形变操作
+###5.  对Tensor的形变操作
 
    1. view
 
@@ -186,7 +186,99 @@
    
       就是将原来2维度对应的数值1，放到了新张量中第0维的位置，后面同理
 
+### 6. 矩阵的运算
 
+1. 矩阵的除法：
+
+   A/B就相当于是$A*B^{-1}$ ，是一种求逆运算。
+
+2. 矩阵的乘法：
+
+   在torch里，矩阵的乘法是torch.matmul()，而*代表的是矩阵内部对应元素相乘。注意matmul运算时不论参与运算的矩阵有几维，都只有最后两位参与运算。
+   
+3. @也可以代表矩阵乘法
+
+4. max函数：
+
+   返回两个值，一个是指定维度上最大的数值，一个是它所对应的索引值
+
+5. argmax函数：
+
+   只返回指定维度上的索引值
+
+6. topk函数：
+
+   返回指定维度上的指定个数最大值和他们的索引值
+
+### tensor的高阶用法：
+
+1. where：
+
+   torch.where(condition, x, y)，condition：判断条件，x：若满足条件，则取x中元素，y：若不满足条件，则取y中元素
+
+   ```python
+   import torch
+    
+   # 条件
+   condition = torch.rand(3, 2)
+   print(condition)
+   # 满足条件则取x中对应元素
+   x = torch.ones(3, 2)
+   print(x)
+   # 不满足条件则取y中对应元素
+   y = torch.zeros(3, 2)
+   print(y)
+   # 条件判断后的结果
+   result = torch.where(condition > 0.5, x, y)
+   print(result)
+   ```
+
+   结果如下：
+
+   ```python
+   tensor([[0.3224, 0.5789],
+           [0.8341, 0.1673],
+           [0.1668, 0.4933]])
+   tensor([[1., 1.],
+           [1., 1.],
+           [1., 1.]])
+   tensor([[0., 0.],
+           [0., 0.],
+           [0., 0.]])
+   tensor([[0., 1.],
+           [1., 0.],
+           [0., 0.]])
+   ```
+
+2. gather():
+
+   首先，先给出[torch](https://so.csdn.net/so/search?q=torch&spm=1001.2101.3001.7020).gather函数的函数定义`torch.gather(input, dim, index, out=None) → Tensor`
+   官方给出的解释是这样的： 沿给定轴dim，将输入索引张量index指定位置的值进行聚合。
+
+   看代码：
+
+   ```python
+   import torch
+   a = torch.Tensor([[1,2],[3,4]])
+   print(a)
+   b = torch.gather(a,0,torch.LongTensor([[0,0],[1,0]]))#对行进行操作，实际上等同于队列操作（对同一列上的行急进行的操作）
+   print(b)
+   c = torch.gather(a, dim=1, index = torch.LongTensor([[0,0],[1,0]]))#对列的操作，对同一行上的列进行的操作
+   print(c)
+   ```
+
+   输出：
+
+   ```python
+   tensor([[1., 2.],
+           [3., 4.]])
+   tensor([[1., 2.],
+           [3., 2.]])
+   tensor([[1., 1.],
+           [4., 3.]])
+   ```
+
+   一些说明：![IMG_20220206_103101](C:\python\python3.9-Mindspore-深度学习\笔记\IMG_20220206_103101.jpg)
 
 
 
